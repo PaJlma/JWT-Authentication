@@ -1,0 +1,16 @@
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9375rem;
+  padding: 0.75rem 1.625rem;
+  color: var(--secondary-color);
+  font-size: 1rem;
+  border-radius: 2.1875rem;
+
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+  }
+}

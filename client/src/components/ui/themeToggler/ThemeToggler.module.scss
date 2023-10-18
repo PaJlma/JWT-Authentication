@@ -1,0 +1,27 @@
+@import "@/scss/blueprints.scss";
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.625rem;
+  border-radius: 100%;
+  @extend %transition-delay;
+  
+  &:hover {
+    background-color: var(--background-color-lighten);
+    @extend %transition-delay;
+  }
+
+  svg {
+    width: 1.875rem;
+    height: 1.875rem;
+    flex: none;
+
+    * {
+      fill: var(--secondary-color);
+    }
+  }
+}

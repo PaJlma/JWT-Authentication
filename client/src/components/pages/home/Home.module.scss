@@ -1,0 +1,11 @@
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  height: 100%;
+
+  .card-box {
+    width: 14.8125rem;
+  }
+}

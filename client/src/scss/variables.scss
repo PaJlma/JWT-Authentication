@@ -1,0 +1,17 @@
+body {
+  --error-color: #ff0000;
+}
+
+body[data-theme="light"] {
+  --background-color: #fff;
+  --background-color-shadowed: #fff;
+  --background-color-lighten: #bebebe;
+  --secondary-color: #0D0D0D;
+}
+
+body[data-theme="dark"] {
+  --background-color: #0D0D0D;
+  --background-color-shadowed: #181818;
+  --background-color-lighten: #474747;
+  --secondary-color: #fff;
+}

@@ -1,0 +1,16 @@
+@import "@/scss/blueprints.scss";
+
+body {
+  background-color: var(--background-color);
+  font-family: "Inter", sans-serif;
+  height: 100vh;
+  @extend %transition-delay;
+}
+
+#root {
+  height: 100%;
+}
+
+.wrapper {
+  width: 98%;
+}
