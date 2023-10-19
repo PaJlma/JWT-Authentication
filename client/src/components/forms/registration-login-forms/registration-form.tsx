@@ -1,14 +1,15 @@
 import { FC } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { regexps } from "@/global/regexps";
 
 import Input from "@/components/ui/input/Input";
+import Button from "@/components/ui/button/Button";
 
 import styles from "./registration-login-forms.module.scss";
 
 import AccountSVG from "@/assets/svgs/account.svg?react";
 import EmailSVG from "@/assets/svgs/email.svg?react";
 import PasswordSVG from "@/assets/svgs/key.svg?react";
-import Button from "@/components/ui/button/Button";
-import { SubmitHandler, useForm } from "react-hook-form";
 
 interface IRegistrationForm {}
 
@@ -20,14 +21,14 @@ const RegistrationForm: FC<IRegistrationForm> = (props) => {
     repeatPassword: string;
   }
 
-  const { register, handleSubmit, formState: { errors } } = useForm<IFields>(); 
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFields>(); 
 
   const onSubmit: SubmitHandler<IFields> = data => {
     console.log(data);
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.body}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} className={styles.body}>
       <Input 
         placeholder="Псевдоним"
         type="text"
@@ -36,7 +37,7 @@ const RegistrationForm: FC<IRegistrationForm> = (props) => {
           required: true,
         })}
         validationErrors={[
-          { reason: "required", message: "Поле обязательно для заполнения" }
+          { reason: "required", message: "Поле обязательно для заполнения" },
         ]}
         errors={errors}
       />
@@ -47,11 +48,11 @@ const RegistrationForm: FC<IRegistrationForm> = (props) => {
         icon={<EmailSVG />}
         register={register("email", {
           required: true,
-          pattern: /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/,
+          pattern: regexps.email,
         })}
         validationErrors={[
           { reason: "required", message: "Поле обязательно для заполнения" },
-          { reason: "pattern", message: "Поле должно содержать валидный Email адрес" }
+          { reason: "pattern", message: "Поле должно содержать валидный email адрес" },
         ]}
         errors={errors}
       />
@@ -60,17 +61,37 @@ const RegistrationForm: FC<IRegistrationForm> = (props) => {
         placeholder="Пароль"
         type="password"
         icon={<PasswordSVG />}
-      />
+        register={register("password", {
+          required: true,
+          minLength: 6,
+          maxLength: 25,
+        })}
+        validationErrors={[
+          { reason: "required", message: "Поле обязательно для заполнения" },
+          { reason: "minLength", message: "Пароль должен состоять минимум из 6 символов" },
+          { reason: "maxLength", message: "Пароль должен состоять максимум из 25 символов" },
+        ]}
+        errors={errors}
+        />
 
       <Input 
         placeholder="Повторите пароль"
         type="password"
         icon={<PasswordSVG />}
+        register={register("repeatPassword", {
+          required: true,
+          validate: (repeatedPassword) => repeatedPassword === getValues().password, 
+        })}
+        validationErrors={[
+          { reason: "required", message: "Поле обязательно для заполнения" },
+          { reason: "validate", message: "Пароли не совпадают" },
+        ]}
+        errors={errors}
       />
       
       <Button  
         text="Создать аккаунт"
-        className="card-red"
+        className="card-dark-blue"
       />
     </form>
   );

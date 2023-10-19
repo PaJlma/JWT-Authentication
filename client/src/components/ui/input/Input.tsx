@@ -4,7 +4,7 @@ import { FieldErrors, LiteralUnion, UseFormRegisterReturn } from "react-hook-for
 import styles from "./Input.module.scss";
 
 interface IValidationError {
-  reason: "disabled" | "max" | "maxLength" | "min" | "minLength" | "pattern" | "required" | "value" | "onChange" | "onBlur" | "validate" | "setValueAs" | "shouldUnregister" | "deps" | "valueAsNumber" | "valueAsDate";
+  reason: "disabled" | "max" | "maxLength" | "min" | "minLength" | "pattern" | "required" | "value" | "onChange" | "onBlur" | "validate" | "setValueAs" | "shouldUnregister" | "deps" | "valueAsNumber" | "valueAsDate" | string;
   message: string;
 }
 

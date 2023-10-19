@@ -19,6 +19,14 @@
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--secondary-color);
+    
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      -webkit-text-fill-color: var(--secondary-color) !important;
+      -webkit-box-shadow: 0 0 0 62.5rem var(--background-color-shadowed) inset !important;
+    }
   }
 
   svg {
@@ -41,5 +49,6 @@
     color: var(--error-color);
     font-size: 0.8rem;
     font-weight: 200;
+
   }
 }
