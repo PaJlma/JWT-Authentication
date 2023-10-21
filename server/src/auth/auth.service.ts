@@ -71,8 +71,8 @@ export class AuthService {
     return tokens;
   }
 
-  async logout(user: string): Promise<void> {
-    await this.sessionsService.remove(user);
+  async logout(userId: string): Promise<void> {
+    await this.sessionsService.remove(userId);
   }
 
   private async validate(email: string, password: string): Promise<User | undefined> {

@@ -14,8 +14,8 @@ dayjs.extend(utc);
 export class SessionsService {
   constructor (@InjectModel(Session.name) private readonly sessionModel: Model<Session>) {}
 
-  async getByUserId(user: string): Promise<Session> {
-    return this.sessionModel.findOne({ user }).exec();
+  async getByUserId(userId: string): Promise<Session> {
+    return this.sessionModel.findOne({ userId }).exec();
   }
 
   async getByAccessToken(accessToken: string): Promise<Session> {
@@ -26,8 +26,8 @@ export class SessionsService {
     return this.sessionModel.findOne({ refreshToken }).exec();
   }
   
-  async create(user: string, accessToken: string, refreshToken: string): Promise<Session> {
-    if (await this.getByUserId(user)) {
+  async create(userId: string, accessToken: string, refreshToken: string): Promise<Session> {
+    if (await this.getByUserId(userId)) {
       throw new ConflictException("Сессия для этого пользователя уже создана");
     }
 
@@ -35,16 +35,16 @@ export class SessionsService {
       throw new ConflictException("Этот токен уже используется");
     }
 
-    const createdSession = new this.sessionModel({ user, accessToken, refreshToken });
+    const createdSession = new this.sessionModel({ userId, accessToken, refreshToken });
     return createdSession.save();
   }
 
-  async remove(user: string): Promise<Session> {
-    return this.sessionModel.findOneAndDelete({ user }).exec();
+  async remove(userId: string): Promise<Session> {
+    return this.sessionModel.findOneAndDelete({ userId }).exec();
   }
 
-  async update(user: string, accessToken: string, refreshToken: string): Promise<Session> {
-    return this.sessionModel.findOneAndUpdate({ user }, {
+  async update(userId: string, accessToken: string, refreshToken: string): Promise<Session> {
+    return this.sessionModel.findOneAndUpdate({ userId }, {
       $set: {
         accessToken,
         refreshToken,
