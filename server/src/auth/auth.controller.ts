@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post, Res } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Response } from "express";
 
-import { AuthService, ITokens } from "src/auth/auth.service";
+import { AuthService } from "src/auth/auth.service";
 
 import CreateUserDto from "src/types/dtos/user/createUser.dto";
 import LoginUserDto from "src/types/dtos/user/loginUser.dto";
@@ -18,8 +19,10 @@ export class AuthController {
     status: HttpStatus.CREATED,
   })
   @Post("register")
-  register(@Body() dto: CreateUserDto): Promise<ITokens> {
-    return this.authService.register(dto);
+  async register(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response): Promise<string> {
+    const { access, refresh } = await this.authService.register(dto);
+    response.cookie("refresh", refresh);
+    return access;
   }
   
   @ApiOperation({
@@ -29,8 +32,10 @@ export class AuthController {
     status: HttpStatus.CREATED,
   })
   @Post("login")
-  login(@Body() dto: LoginUserDto): Promise<ITokens> {
-    return this.authService.login(dto);
+  async login(@Body() dto: LoginUserDto, @Res({ passthrough: true }) response: Response): Promise<string> {
+    const { access, refresh } = await this.authService.login(dto);
+    response.cookie("refresh", refresh);
+    return access;
   }
 
   @ApiOperation({
@@ -40,8 +45,10 @@ export class AuthController {
     status: HttpStatus.OK,
   })
   @Patch("refresh/:userId")
-  refresh(@Param("userId") userId: string): Promise<ITokens> {
-    return this.authService.refresh(userId);
+  async refresh(@Param("userId") userId: string, @Res({ passthrough: true }) response: Response): Promise<string> {
+    const { access, refresh } = await this.authService.refresh(userId);
+    response.cookie("refresh", refresh);
+    return access;
   }
   
   @ApiOperation({
