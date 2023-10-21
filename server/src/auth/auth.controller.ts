@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { AuthService, ITokens } from "src/auth/auth.service";
@@ -31,5 +31,28 @@ export class AuthController {
   @Post("login")
   login(@Body() dto: LoginUserDto): Promise<ITokens> {
     return this.authService.login(dto);
+  }
+
+  @ApiOperation({
+    summary: "Обновление Refresh токена",
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  @Patch("refresh/:userId")
+  refresh(@Param("userId") userId: string): Promise<ITokens> {
+    return this.authService.refresh(userId);
+  }
+  
+  @ApiOperation({
+    summary: "Выход из аккаунта",
+  })
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT,
+  })
+  @Delete("logout/:userId")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  logout(@Param("userId") userId: string): void {
+    this.authService.logout(userId);
   }
 }
