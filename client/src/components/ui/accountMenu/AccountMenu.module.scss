@@ -1,0 +1,82 @@
+@import "@/scss/blueprints.scss";
+
+.body {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+
+  p {
+    font-size: 0.91rem;
+    font-weight: 700;
+    color: var(--secondary-color);
+  }
+
+  svg {
+    width: 1.875rem;
+    height: 1.875rem;
+    flex: none;
+
+    * {
+      fill: var(--secondary-color);
+    }
+  }
+  
+  .menu {
+    position: absolute;
+    bottom: -4rem;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    width: 11.125rem;
+    border-radius: 0.3125rem;
+    box-shadow: 0 0 0.75rem 0.125rem rgba(0, 0, 0, 0.25);
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 71px;
+      top: -5px;
+      background-color: var(--background-color-shadowed);
+      z-index: 0;
+      display: block;
+      width: 0.625rem;
+      height: 0.625rem;
+      transform: rotate(45deg);
+    }
+  }
+  
+  .menu-item {
+    display: flex;
+    z-index: 1;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.8125rem;
+    width: 100%;
+    height: 3.125rem;
+    border-radius: 0.3125rem;
+    background-color: var(--background-color-shadowed);
+    @extend %transition-delay;
+    
+    &:hover {
+      background-color: var(--background-color-lighten);
+      @extend %transition-delay;
+    }
+
+    p {
+      font-size: 1rem;
+      color: var(--secondary-color);
+    }
+
+    svg {
+      width: 1.5625rem;
+      height: 1.5625rem;
+      flex: none;
+      
+      * {
+        fill: var(--secondary-color);
+      }
+    }
+  }
+}

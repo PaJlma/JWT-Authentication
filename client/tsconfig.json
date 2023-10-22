@@ -26,7 +26,8 @@
       "@/scss/*": ["./src/scss/*"],
       "@/store/*": ["./src/store/*"],
       "@/assets/*": ["./src/assets/*"],
-      "@/hooks/*": ["./src/hooks/*"]
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/global/*": ["./src/global/*"],
     }
   },  
   "include": ["src"],

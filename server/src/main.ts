@@ -9,8 +9,10 @@ import { ConfigService } from "@nestjs/config";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    cors: true,
+  const app = await NestFactory.create(AppModule);
+  app.enableCors({
+    credentials: true,
+    origin: "http://localhost:3000",
   });
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());

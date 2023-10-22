@@ -5,7 +5,7 @@ import styles from "./Input.module.scss";
 
 interface IValidationError {
   reason: "disabled" | "max" | "maxLength" | "min" | "minLength" | "pattern" | "required" | "value" | "onChange" | "onBlur" | "validate" | "setValueAs" | "shouldUnregister" | "deps" | "valueAsNumber" | "valueAsDate" | string;
-  message: string;
+  message?: string;
 }
 
 interface IInput extends InputHTMLAttributes<HTMLInputElement> {
