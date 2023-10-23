@@ -1,12 +1,14 @@
-import { FC, ReactElement, ReactNode } from "react";
-import { Route, Routes } from "react-router-dom";
+import { FC, ReactElement, ReactNode } from 'react';
 
-import Home from "@/components/pages/home/Home";
-import Registration from "@/components/pages/registration-login/registration";
-import Login from "@/components/pages/registration-login/login";
-import { useAccount } from "@/hooks/useAccount";
-import TrafficLight from "@/components/router/trafficLight/TrafficLight";
-import Users from "@/components/pages/users/Users";
+import { Route, Routes } from 'react-router-dom';
+
+import TrafficLight from '@/components/router/trafficLight/TrafficLight';
+import Home from '@/components/pages/home/Home';
+import Login from '@/components/pages/registration-login/login';
+import Registration from '@/components/pages/registration-login/registration';
+import Users from '@/components/pages/users/Users';
+
+import { useAccount } from '@/hooks/useAccount';
 
 interface IRouter {}
 
