@@ -49,7 +49,7 @@ const LoginForm: FC<ILoginForm> = (props) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.body}>
+    <form noValidate onSubmit={handleSubmit(onSubmit)} className={styles.body}>
       <Input 
         placeholder="Почта"
         type="email"
