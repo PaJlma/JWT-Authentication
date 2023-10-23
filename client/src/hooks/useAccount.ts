@@ -10,12 +10,14 @@ import accountSlice from "@/store/reducers/account.reducer";
 import IAccount from "@/types/account.interface";
 import TokenPayload from "@/types/tokenPayload.interface";
 
-export interface useAccountReturns {
+export interface UseAccountReturns {
   getAccount: () => IAccount | null;
   registration: (data: RegistrationPayload, options?: RegistrationOptions) => Promise<void>;
   login: (data: LoginPayload, options?: LoginOptions) => Promise<void>;
   logout: (userId: string, options?: LogoutOptions) => Promise<void>;
 }
+
+type UseAccount = () => UseAccountReturns;
 
 export interface RegistrationPayload {
   nick: string;
@@ -38,7 +40,7 @@ export interface LoginOptions extends AuthenticationOptions {}
 
 export interface LogoutOptions extends AuthenticationOptions {}
 
-export const useAccount = (): useAccountReturns => {
+export const useAccount: UseAccount = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const account = useAppSelector(state => state.account);

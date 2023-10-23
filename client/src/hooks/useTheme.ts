@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+type UseThemeReturns = [ Themes, () => void ];
+
+type UseTheme = () => UseThemeReturns;
+
 type Themes = "light" | "dark";
 
 const defaultTheme = localStorage.getItem("theme") as Themes ?? "light";
@@ -7,7 +11,7 @@ const defaultTheme = localStorage.getItem("theme") as Themes ?? "light";
 document.body.setAttribute("data-theme", defaultTheme);
 localStorage.setItem("theme", defaultTheme);
 
-const useTheme = (): [ Themes, () => void ] => {
+const useTheme: UseTheme = () => {
   const [ theme, setTheme ] = useState<Themes>(defaultTheme);
   
   const toggleTheme = (): void => {
