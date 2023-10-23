@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { useAppSelector } from "@/hooks/redux";
+
+import { useAccount } from "@/hooks/useAccount";
 
 import Logotype from "@/components/ui/logotype/Logotype";
 import Button from "@/components/ui/button/Button";
 import ThemeToggler from "@/components/ui/themeToggler/ThemeToggler";
-import AccountMenu from "@/components/ui/accountMenu/accountMenu";
+import AccountMenu from "@/components/ui/accountMenu/AccountMenu";
 
 import styles from "./Header.module.scss";
 
@@ -14,7 +15,8 @@ import RegistrationSVG from "@/assets/svgs/registration.svg?react";
 interface IHeader {}
 
 const Header: FC<IHeader> = (props) => {
-  const account = useAppSelector(state => state.account);
+  const { getAccount } = useAccount();
+  const account = getAccount();
 
   return (
     <header className={`${styles.body} wrapper`}>
@@ -22,7 +24,7 @@ const Header: FC<IHeader> = (props) => {
 
       <section>
         {
-          Object.values(account).every(value => value !== null)
+          account
           ?
           <AccountMenu />
           :
