@@ -11,7 +11,7 @@ export class UsersService {
   constructor (@InjectModel(User.name) private readonly userModel: Model<User>) {}
 
   async getAll(): Promise<User[]> {
-    return this.userModel.find({}).exec();
+    return this.userModel.find({}, { nick: true, email: true, createdAt: true }).exec();
   }
 
   async getById(id: string): Promise<User> {

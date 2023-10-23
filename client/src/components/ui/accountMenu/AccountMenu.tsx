@@ -25,7 +25,7 @@ const AccountMenu: FC<IAccountMenu> = (props) => {
           {
             menuActive &&
             <div className={styles.menu}>
-              <div onClick={() => logout(account.id, { redirect: true })} className={styles["menu-item"]}>
+              <div onClick={() => logout(account._id, { redirect: true })} className={styles["menu-item"]}>
                 <LogoutSVG />
                 <p>Выйти</p>
               </div>

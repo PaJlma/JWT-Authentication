@@ -1,5 +1,5 @@
 interface IAccount {
-  id: string;
+  _id: string;
   nick: string,
   email: string,
   createdAt: string,

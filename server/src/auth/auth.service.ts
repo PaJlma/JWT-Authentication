@@ -90,8 +90,8 @@ export class AuthService {
   }
 
   private async generateTokens(user: User): Promise<ITokens> {
-    const payload: Omit<User, "password"> & { id: string } = {
-      id: user["_id"],
+    const payload: Omit<User, "password"> & { _id: string } = {
+      _id: user["_id"],
       nick: user.nick,
       email: user.email,
       createdAt: user.createdAt,
