@@ -43,7 +43,7 @@ export class Session {
     example: 1697828965,
     format: "unix",
   })
-  @Prop({ default: dayjs().utc().unix() })
+  @Prop({ required: true })
   createdAt: number;
   
   @ApiProperty({
@@ -51,7 +51,7 @@ export class Session {
     example: 1700420965,
     format: "unix",
   })
-  @Prop( { default: dayjs().utc().add(30, "day").unix() } )
+  @Prop( { required: true } )
   expiresAt: number;
 }
 

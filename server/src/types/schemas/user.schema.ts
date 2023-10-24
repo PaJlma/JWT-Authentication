@@ -2,8 +2,6 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { DATETIME_FORMAT } from "src/global/timeFormats";
-
 import * as dayjs from "dayjs";
 import * as utc from "dayjs/plugin/utc";
 
@@ -45,7 +43,7 @@ export class User {
     example: "21-10-2023 18:43:12",
     format: "DD-MM-YYYY HH:mm:ss",
   })
-  @Prop({ default: dayjs().utc().format(DATETIME_FORMAT) })
+  @Prop({ required: true })
   createdAt: string;
 }
 

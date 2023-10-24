@@ -1,15 +1,10 @@
 import { FC } from "react";
 
 import * as dayjs from "dayjs";
-import * as customParseFormat from "dayjs/plugin/customParseFormat";
-import * as utc from "dayjs/plugin/utc";
 
 import styles from "./UserStrip.module.scss";
 
 import AccountSVG from "@/assets/svgs/account_round.svg?react";
-
-dayjs.extend(customParseFormat);
-dayjs.extend(utc);
 
 interface IUserStrip {
   nick?: string;
@@ -38,7 +33,7 @@ const UserStrip: FC<IUserStrip> = ({ nick, email, createdAt }) => {
           <p>{ email }</p>
         </div>
 
-        <p>{ dayjs(createdAt, "DD-MM-YYYY HH:mm:ss").add(3, "hours").format("DD-MM-YYYY HH:mm:ss") }</p>
+        <p>{ dayjs(-dayjs(createdAt).diff(dayjs(), "date")).minute() }</p>
       </div>
     </div>
   );

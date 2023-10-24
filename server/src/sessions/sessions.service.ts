@@ -35,7 +35,7 @@ export class SessionsService {
       throw new ConflictException("Этот токен уже используется");
     }
 
-    const createdSession = new this.sessionModel({ userId, accessToken, refreshToken });
+    const createdSession = new this.sessionModel({ userId, accessToken, refreshToken, createdAt: dayjs().utc().unix(), expiresAt: dayjs().utc().add(30, "day").unix() });
     return createdSession.save();
   }
 

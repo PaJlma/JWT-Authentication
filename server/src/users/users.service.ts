@@ -1,6 +1,8 @@
 import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 
+import * as dayjs from "dayjs";
+
 import { Model } from "mongoose";
 
 import { User } from "src/types/schemas/user.schema";
@@ -27,7 +29,7 @@ export class UsersService {
       throw new ConflictException("Пользователь с таким email уже существует");
     }
 
-    const createdUser = new this.userModel(dto);
+    const createdUser = new this.userModel({ ...dto, createdAt: dayjs().utc().toISOString() });
     return createdUser.save();
   }
 
