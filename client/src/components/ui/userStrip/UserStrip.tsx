@@ -1,10 +1,9 @@
 import { FC } from "react";
 
-import * as dayjs from "dayjs";
-
 import styles from "./UserStrip.module.scss";
 
 import AccountSVG from "@/assets/svgs/account_round.svg?react";
+import getTimeAgo from "@/scripts/getTimeAgo";
 
 interface IUserStrip {
   nick?: string;
@@ -13,6 +12,8 @@ interface IUserStrip {
 }
 
 const UserStrip: FC<IUserStrip> = ({ nick, email, createdAt }) => {
+  const timeAgo = getTimeAgo(createdAt);
+
   const style = [
     "card-emerald",
     "card-green",
@@ -27,13 +28,15 @@ const UserStrip: FC<IUserStrip> = ({ nick, email, createdAt }) => {
   return (
     <div className={`${styles.body} ${style}`}>
       <div className={styles.row}>
-        <AccountSVG />
-        <div className={styles.column}>
-          <h6>{ nick }</h6>
-          <p>{ email }</p>
+        <div className={styles.left}>
+          <AccountSVG />
+          <div className={styles.column}>
+            <h6>{ nick }</h6>
+            <p>{ email }</p>
+          </div>
         </div>
 
-        <p>{ dayjs(-dayjs(createdAt).diff(dayjs(), "date")).minute() }</p>
+        <p>{ `Создан ${timeAgo} назад` }</p>
       </div>
     </div>
   );
