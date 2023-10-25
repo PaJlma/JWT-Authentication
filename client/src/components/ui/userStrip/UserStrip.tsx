@@ -1,9 +1,10 @@
 import { FC } from "react";
 
+import getTimeAgo from "@/scripts/getTimeAgo";
+
 import styles from "./UserStrip.module.scss";
 
 import AccountSVG from "@/assets/svgs/account_round.svg?react";
-import getTimeAgo from "@/scripts/getTimeAgo";
 
 interface IUserStrip {
   nick?: string;

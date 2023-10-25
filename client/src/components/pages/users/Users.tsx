@@ -15,12 +15,14 @@ const Users: FC<IUser> = (props) => {
   const { getAccount } = useAccount();
   const account = getAccount();
 
+  const users = data?.filter(user => user._id !== account?._id);
+
   return (
     <main className={styles.body}>
       <RefreshButton onClick={refetch} />
       <UserStrip nick="You" email={account?.email} createdAt={account?.createdAt} />
       {
-        data?.filter(user => user._id !== account?._id).map(user => <UserStrip 
+        users?.map(user => <UserStrip 
           nick={user.nick}
           email={user.email}
           createdAt={user.createdAt}
