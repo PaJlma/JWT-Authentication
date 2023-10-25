@@ -25,6 +25,14 @@ export class SessionsService {
   async getByRefreshToken(refreshToken: string): Promise<Session> {
     return this.sessionModel.findOne({ refreshToken }).exec();
   }
+
+  async getByUserIdAndAccessToken(userId: string, accessToken: string): Promise<Session> {
+    return this.sessionModel.findOne({ userId, accessToken }).exec();
+  }
+
+  async getByUserIdAndRefreshToken(userId: string, refreshToken: string): Promise<Session> {
+    return this.sessionModel.findOne({ userId, refreshToken }).exec();
+  }
   
   async create(userId: string, accessToken: string, refreshToken: string): Promise<Session> {
     if (await this.getByUserId(userId)) {

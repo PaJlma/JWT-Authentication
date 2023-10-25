@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Patch, Post, Req, Res } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { Response } from "express";
+import { Response, Request } from "express";
 
 import { AuthService } from "src/auth/auth.service";
 
@@ -21,7 +21,7 @@ export class AuthController {
   @Post("register")
   async register(@Body() dto: CreateUserDto, @Res({ passthrough: true }) response: Response): Promise<string> {
     const { access, refresh } = await this.authService.register(dto);
-    response.cookie("refresh", refresh);
+    response.cookie("refresh", refresh, { httpOnly: true });
     return access;
   }
   
@@ -34,7 +34,7 @@ export class AuthController {
   @Post("login")
   async login(@Body() dto: LoginUserDto, @Res({ passthrough: true }) response: Response): Promise<string> {
     const { access, refresh } = await this.authService.login(dto);
-    response.cookie("refresh", refresh);
+    response.cookie("refresh", refresh, { httpOnly: true });
     return access;
   }
 
@@ -45,9 +45,10 @@ export class AuthController {
     status: HttpStatus.OK,
   })
   @Patch("refresh/:userId")
-  async refresh(@Param("userId") userId: string, @Res({ passthrough: true }) response: Response): Promise<string> {
-    const { access, refresh } = await this.authService.refresh(userId);
-    response.cookie("refresh", refresh);
+  async refresh(@Param("userId") userId: string, @Res({ passthrough: true }) response: Response, @Req() request: Request): Promise<string> {
+    const refreshToken = request.cookies.refresh;
+    const { access, refresh } = await this.authService.refresh(userId, refreshToken);
+    response.cookie("refresh", refresh, { httpOnly: true });
     return access;
   }
   

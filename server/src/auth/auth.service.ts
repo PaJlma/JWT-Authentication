@@ -57,11 +57,11 @@ export class AuthService {
     return tokens;
   }
 
-  async refresh(userId: string): Promise<ITokens> {
+  async refresh(userId: string, refreshToken: string): Promise<ITokens> {
     const user = await this.usersService.getById(userId);
 
-    if (!user) {
-      throw new NotFoundException("Пользователь не найден");
+    if (!await this.sessionsService.getByUserIdAndRefreshToken(userId, refreshToken)) {
+      throw new NotFoundException("Пользователь не существует, либо токен не валиден");
     }
 
     const tokens = await this.generateTokens(user);

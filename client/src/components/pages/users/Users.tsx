@@ -11,9 +11,9 @@ import styles from "./Users.module.scss";
 interface IUser {}
 
 const Users: FC<IUser> = (props) => {
-  const { data, refetch } = useGetAllUsersQuery();
   const { getAccount } = useAccount();
   const account = getAccount();
+  const { data, refetch } = useGetAllUsersQuery();
 
   const users = data?.filter(user => user._id !== account?._id);
 

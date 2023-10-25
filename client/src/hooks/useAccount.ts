@@ -54,16 +54,20 @@ export const useAccount: UseAccount = () => {
   }
 
   const registration = async (data: RegistrationPayload, options?: RegistrationOptions): Promise<void> => {
-    const response = await axios.post<string>("http://localhost:5000/auth/register", data);
+    const response = await axios.post<string>("http://localhost:5000/auth/register", data, { withCredentials: true });
 
+    localStorage.setItem("access", response.data);
+    
     const { iat, exp, ...account } = jwtDecode<TokenPayload<IAccount>>(response.data);
     dispatch(accountSlice.actions.login(account));
-
+    
     options?.redirect && navigate("/");
   }
   
   const login = async (data: LoginPayload, options?: LoginOptions): Promise<void> => {
-    const response = await axios.post<string>("http://localhost:5000/auth/login", data);
+    const response = await axios.post<string>("http://localhost:5000/auth/login", data, { withCredentials: true });
+    
+    localStorage.setItem("access", response.data);
     
     const { iat, exp, ...account } = jwtDecode<TokenPayload<IAccount>>(response.data);
     dispatch(accountSlice.actions.login(account));
