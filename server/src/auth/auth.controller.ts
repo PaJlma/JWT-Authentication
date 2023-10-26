@@ -60,7 +60,8 @@ export class AuthController {
   })
   @Delete("logout/:userId")
   @HttpCode(HttpStatus.NO_CONTENT)
-  logout(@Param("userId") userId: string): void {
+  logout(@Param("userId") userId: string, @Res({ passthrough: true }) response: Response): void {
+    response.cookie("refresh", "");
     this.authService.logout(userId);
   }
 }

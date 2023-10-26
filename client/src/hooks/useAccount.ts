@@ -15,6 +15,7 @@ export interface UseAccountReturns {
   registration: (data: RegistrationPayload, options?: RegistrationOptions) => Promise<void>;
   login: (data: LoginPayload, options?: LoginOptions) => Promise<void>;
   logout: (userId: string, options?: LogoutOptions) => Promise<void>;
+  autoLogin: () => Promise<void>;
 }
 
 type UseAccount = () => UseAccountReturns;
@@ -59,6 +60,9 @@ export const useAccount: UseAccount = () => {
     localStorage.setItem("access", response.data);
     
     const { iat, exp, ...account } = jwtDecode<TokenPayload<IAccount>>(response.data);
+
+    localStorage.setItem("userId", account._id);
+    
     dispatch(accountSlice.actions.login(account));
     
     options?.redirect && navigate("/");
@@ -70,17 +74,46 @@ export const useAccount: UseAccount = () => {
     localStorage.setItem("access", response.data);
     
     const { iat, exp, ...account } = jwtDecode<TokenPayload<IAccount>>(response.data);
-    dispatch(accountSlice.actions.login(account));
 
+    localStorage.setItem("userId", account._id);
+
+    dispatch(accountSlice.actions.login(account));
+    
     options?.redirect && navigate("/");
   }
   
   const logout = async (userId: string, options?: LogoutOptions): Promise<void> => {
-    await axios.delete<void>(`http://localhost:5000/auth/logout/${userId}`);
+    await axios.delete<void>(`http://localhost:5000/auth/logout/${userId}`, { withCredentials: true });
     dispatch(accountSlice.actions.logout());
+
+    localStorage.setItem("access", "");
+    localStorage.setItem("userId", "");
 
     options?.redirect && navigate("/");
   }
+  
+  const autoLogin = async (): Promise<void> => {
+    const userId = localStorage.getItem("userId");
+  
+    if (userId === "") {
+      return;
+    }
+  
+    try {
+      const response = await axios.patch<string>(`http://localhost:5000/auth/refresh/${userId}`, null, { withCredentials: true });
+    
+      const { iat, exp, ...account } = jwtDecode<TokenPayload<IAccount>>(response.data);
+  
+      dispatch(accountSlice.actions.login(account))
+  
+      localStorage.setItem("access", response.data);
+    } catch {
+      dispatch(accountSlice.actions.logout());
+      localStorage.setItem("access", "");
+      localStorage.setItem("userId", "");
+    }
 
-  return { getAccount, registration, login, logout };
+  }
+
+  return { getAccount, registration, login, logout, autoLogin };
 }
